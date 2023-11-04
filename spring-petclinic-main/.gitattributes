@@ -1,3 +1,2 @@
 mvnw    text eol=lf
 *.java  text eol=lf
-*.java linguist-vendored=false
