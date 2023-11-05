@@ -74,7 +74,6 @@ class OwnerController {
 		if (result.hasErrors()) {
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 		}
-
 		this.owners.save(owner);
 		return "redirect:/owners/" + owner.getId();
 	}
@@ -129,7 +128,7 @@ class OwnerController {
 	private Page<Owner> findPaginatedForOwnersFirstName(int page, String firstName) {
 		int pageSize = 5;
 		Pageable pageable = PageRequest.of(page - 1, pageSize);
-		return owners.findByFirstName("%" + firstName + "%", pageable);
+		return owners.findByFirstName(firstName, pageable);
 	}
 
 	@GetMapping("/owners/{ownerId}/edit")

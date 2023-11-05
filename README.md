@@ -46,12 +46,74 @@ logging.level.org.springframework.web=DEBUG
 
 
 
-
 ## 개발 부분
 
+
+### 생성 단축키
+IntelliJ 기준 -> Alt + Insert   (생성자, Getter, Setter 등)
+
+#
+
 ### query
-@Query("SELECT DISTINCT owner FROM Owner owner left join  owner.pets WHERE owner.firstName LIKE :firstName ")
+@Query("SELECT DISTINCT owner FROM Owner owner left join  owner.pets WHERE owner.firstName LIKE :firstName %")
 
 firstName 부분 앞에 다른 값 삽입 불가.
 
-firstName 부분을 애초에  "%" + firstName + "%" 로 만들어야 함.
+LIKE %:firstName % 로 작성해야함.
+
+#
+
+### IoC (Inversion of Control)
+
+일반적인 (의존성에 대한) 제어권: “내가 사용할 의존성은 내가만든다.”
+
+IoC: “내가 사용할 의존성을 누군가 알아서 주겠지”
+
+-> OwnerController.java
+public OwnerController(OwnerRepository clinicService) {
+	this.owners = clinicService;
+}
+
+해당 코드에서 OwnerRepository clinicService 는 누가 넣어주느냐.
+
+-> OwnerControllerTests.java
+@MockBean                   // MockBean 스프링프레임워크 핵심기술
+private OwnerRepository owners;    // 스프링이 테스트를 만들 때, 자동으로 Bean으로 등록
+
+Bean 이란? Spring이 관리하는 객체
+
+**** 해당 코드를 통해 스프링의 IoC 컨테이너가 의존성을 관리해준다.
+
+직접 만들어서 의존성 주입을 할 수 있지만, 스프링이 제공하는 의존성 주입 관련 기능 혹은
+컨테이너 lifecycle 인터페이스를 통해 다양한 기능 확장이 가능하다. 
+
+그래서 IoC 컨테이너 기능을 사용한다.
+
+#
+
+### 스프링 IoC 컨테이너
+
+빈(bean)을 만들고 엮어주며 제공해준다.
+
+#### bean을 아는 방법.
+IntelliJ Ultimate 버전 기준  codeline 부분에 콩(bean) 모양이 보인다.
+
+@Bean 혹은 extends interface 혹은 직접 해당 타입의 return 을 통해 IoC 컨테이너에 Bean 등록.
+
+의존성 주입을 스프링 IoC 컨터이너에서 해준다.
+
+의존성 주입은 Bean 끼리만 가능하다.  (IoC 컨터이너 내부에 있는 객체들 끼리)
+
+#
+
+### Bean을 가져오는 방법.
+#### 굳이 할 필요는 없음.
+
+ApplicationContext applicationcontext;
+
+applicationcontext.getBeanDefinitionNames();  // 모든 Bean의 이름 get.
+
+applicationcontext.getBean(s:)  // 해당 Bean의 이름으로 Bean을 가져옴.
+
+or Bean type으로 가져옴.
+OwnerController.class로 
