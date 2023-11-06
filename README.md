@@ -1,6 +1,13 @@
 # Spring-Semi-Project
 Spring Project
 
+### src
+```
+src
+┣ checkstyle
+┣ main
+┣ test
+```
 
 ./mvnw package   패키징 필수.   그래야 jar 실행 파일 build 됨.
 
@@ -8,7 +15,7 @@ java -jar target/*.jar  프로젝트 빌드
 
 
 #
-gradle프로젝트로 설정 (gradle X).
+maven 프로젝트 설정.
 
 
 ## issue
@@ -45,6 +52,14 @@ logging.level.org.springframework=INFO
 logging.level.org.springframework.web=DEBUG
 
 
+### Run `spring-javaformat:apply` to fix.
+
+terminal에서
+
+./mvnw spring-javaformat:apply
+
+
+#
 
 ## 개발 부분
 
@@ -117,3 +132,29 @@ applicationcontext.getBean(s:)  // 해당 Bean의 이름으로 Bean을 가져옴
 
 or Bean type으로 가져옴.
 OwnerController.class로 
+
+# 
+
+
+### Bean을 등록하는 방법
+
+● Component Scanning
+
+	○ @Component
+		■ @Repository
+		■ @Service
+		■ @Controller (test 폴더의 java sample패키지에 SampleControllerTest.java)
+		■ @Configuration (test 폴더의 java sample패키지에 SampleConfig.java)
+
+● 또는 직접 일일히 XML이나 자바 설정 파일에 등록
+
+#### 사용하는 방법
+●  @Autowired 또는 @Inject
+->
+
+
+● 또는 ApplicationContext에서 getBean()으로 직접 꺼내거나
+
+오로지 “빈"들만 의존성 주입을 해줍니다
+
+
