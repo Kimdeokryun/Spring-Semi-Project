@@ -61,6 +61,7 @@ terminal에서
 
 #
 
+
 ## 개발 부분
 
 
@@ -139,8 +140,7 @@ OwnerController.class로
 ### Bean을 등록하는 방법
 
 ● Component Scanning
-
-	○ @Component
+	@Component
 		■ @Repository
 		■ @Service
 		■ @Controller (test 폴더의 java sample패키지에 SampleControllerTest.java)
@@ -150,11 +150,60 @@ OwnerController.class로
 
 #### 사용하는 방법
 ●  @Autowired 또는 @Inject
-->
+-> Spring version 4.3 ~ 
 
+클래스에 생성자가 하나뿐이고, 생성자를 주입받는 레퍼런스변수들이 Bean으로 등록되어 있다면 Bean을 자동으로 주입해주도록 되어 있다. 
+
+따라서 Autowired가 생략가능하다. (main java owner 패키지에 OwnerController.java 생성자 부분.)
+
+-> Field에서 직접 주입 (생성자 대신.)
+
+-> Setter에서 주입 (생성자 대신.)
 
 ● 또는 ApplicationContext에서 getBean()으로 직접 꺼내거나
 
+
+● Field에서 의존성을 주입받는 방법.
+
 오로지 “빈"들만 의존성 주입을 해줍니다
 
+#### Bean 등록이 되어 있지 않았는데, 의존성 주입을 하려할 때 error문.
 
+No qualifying bean of type 'org.springframework.~'
+
+#### 생성자에 Bean을 등록하는 것이 좋은 이유
+
+필수적으로 사용해야 하는 레퍼런스 없이는 해당 인스턴스를 만들지 못하도록 강제할 수 있다.
+
+#### 상호 참조 의존성 문제 해결
+
+Field injection이나 Setter injection 사용
+
+
+
+#### 과제 OwnerController에 PetRepository 주입하기
+
+Field
+```
+	@Autowired
+	private PetRepository petRepository;
+```
+
+Constructor
+```
+	private final PetRepository petRepository;
+	public OwnerController(OwnerRepository clinicService, PetRepository petRepository) {
+		this.owners = clinicService;
+		this.petRepository = petRepository;
+	}
+```
+
+Setter
+```
+	private PetRepository petRepository;
+
+	@Autowired
+	public setPetRepository(PetRepository petRepository){
+		this.petRepository = petRepository;
+	}
+```
