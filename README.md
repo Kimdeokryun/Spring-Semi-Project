@@ -1,26 +1,45 @@
 # Spring-Semi-Project
 Spring Project
 
-[src 디렉터리](#src)
-
-[issue](#issue)
-- [Java versionerror](#Java-version-error)
-- [포트 사용](#포트-사용)
-- [spring-javaformat:apply](#spring-javaformat-오류)
-
-[개발 부분](#개발-부분)
-- [생성 단축키](#생성-단축키)
-- [query](#query)
-- [IoC](#IoC)
-- [스프링 IoC 컨테이너](#스프링-IoC-컨테이너)
-- [Bean을 가져오는 방법](#Bean을-가져오는-방법)
-- [Bean을 등록하는 방법](#Bean을-등록하는-방법)
-- [AOP](#AOP)
-- [다양한 AOP 구현 방법](#다양한-AOP-구현-방법)
-- [프록시 패턴](#프록시-패턴)
+- [Spring-Semi-Project](#spring-semi-project)
+- [](#)
+		- [src](#src)
+- [](#-1)
+	- [issue](#issue)
+		- [Java version error](#java-version-error)
+			- [환경 변수 설정](#환경-변수-설정)
+		- [포트 사용](#포트-사용)
+		- [로그 정보](#로그-정보)
+		- [spring javaformat 오류](#spring-javaformat-오류)
+- [](#-2)
+	- [개발 부분](#개발-부분)
+		- [생성 단축키](#생성-단축키)
+- [](#-3)
+		- [query](#query)
+- [](#-4)
+		- [IoC](#ioc)
+- [](#-5)
+		- [스프링 IoC 컨테이너](#스프링-ioc-컨테이너)
+			- [bean을 아는 방법.](#bean을-아는-방법)
+- [](#-6)
+		- [Bean을 가져오는 방법](#bean을-가져오는-방법)
+			- [굳이 할 필요는 없음.](#굳이-할-필요는-없음)
+- [](#-7)
+		- [Bean을 등록하는 방법](#bean을-등록하는-방법)
+			- [사용하는 방법](#사용하는-방법)
+			- [Bean 등록이 되어 있지 않았는데, 의존성 주입을 하려할 때 error문.](#bean-등록이-되어-있지-않았는데-의존성-주입을-하려할-때-error문)
+			- [생성자에 Bean을 등록하는 것이 좋은 이유](#생성자에-bean을-등록하는-것이-좋은-이유)
+			- [상호 참조 의존성 문제 해결](#상호-참조-의존성-문제-해결)
+			- [과제 OwnerController에 PetRepository 주입하기](#과제-ownercontroller에-petrepository-주입하기)
+- [](#-8)
+		- [AOP](#aop)
+		- [다양한 AOP 구현 방법](#다양한-aop-구현-방법)
+		- [프록시 패턴](#프록시-패턴)
+- [](#-9)
 
 
 #
+
 
 ### src
 ```
