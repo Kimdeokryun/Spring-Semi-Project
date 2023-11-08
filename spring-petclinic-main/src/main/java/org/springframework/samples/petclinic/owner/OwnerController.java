@@ -56,8 +56,6 @@ class OwnerController {
 		this.owners = clinicService;
 	}
 
-
-
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
