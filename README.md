@@ -6,14 +6,14 @@ Spring Project
 [issue](#issue)
 - [Java versionerror](#Java-version-error)
 - [포트 사용](#포트-사용)
-- [spring-javaformat:apply](#Run-`spring-javaformat:apply`-to-fix.)
+- [spring-javaformat:apply](#spring-javaformat:apply)
 
 [개발 부분](#개발-부분)
 - [생성 단축키](#생성-단축키)
 - [query](#query)
 - [IoC](#IoC-(Inversion-of-Control))
 - [스프링 IoC 컨테이너](#스프링-IoC-컨테이너)
-- [Bean을 가져오는 방법](#Bean을-가져오는-방법.)
+- [Bean을 가져오는 방법](#Bean을-가져오는-방법)
 - [AOP](#AOP)
 - [다양한 AOP 구현 방법](#다양한-AOP-구현-방법)
 - [프록시 패턴](#프록시-패턴)
@@ -72,10 +72,11 @@ logging.level.org.springframework=INFO
 logging.level.org.springframework.web=DEBUG
 
 
-### Run `spring-javaformat:apply` to fix.
+### spring-javaformat:apply
+
+`spring-javaformat:apply` to fix.
 
 terminal에서
-
 ./mvnw spring-javaformat:apply
 
 
@@ -142,7 +143,8 @@ IntelliJ Ultimate 버전 기준  codeline 부분에 콩(bean) 모양이 보인�
 
 #
 
-### Bean을 가져오는 방법.
+### Bean을 가져오는 방법
+
 #### 굳이 할 필요는 없음.
 
 ApplicationContext applicationcontext;
