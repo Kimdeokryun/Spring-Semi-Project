@@ -19,7 +19,7 @@ Spring Project
 	- [AOP](#aop)
 	- [다양한 AOP 구현 방법](#다양한-aop-구현-방법)
 	- [프록시 패턴](#프록시-패턴)
-
+	- [AOP 적용 예제](#AOP-적용-예제)
 #
 
 
@@ -276,6 +276,65 @@ AOP를 사용하면 해당 코드를 작성하지 않아도 API 호출 시 실�
 ### 프록시 패턴
 ● https://refactoring.guru/design-patterns/proxy
 
-#
 
+### AOP 적용 예제
 
+@LogExecutionTime 으로 메소드 처리 시간 로깅하기
+
+인터페이스 name 파일 만드는 방법 Alt + Enter
+
+LogExecutionTime.java 파일
+```
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface LogExecutionTime {
+
+}
+```
+
+LogAspect.java 파일
+
+- @Component			// Bean 등록을 위함
+- @Aspect				// Aspect 등록
+- @Around은 ProceedingJoinPoint을 사용할 수 있음.
+- JoinPoint는 해당 @LogExecutionTime 의 메서드 target을 의미한다.
+- 해당 JoinPoint를 proceed 하고 앞 뒤로 StopWatch를 실행한다. 그리고 logger를 사용해 출력한다.
+- 그리고 proceed 결과를 return 한다.
+
+```
+@Component			
+@Aspect				
+public class LogAspect {
+
+	Logger logger = LoggerFactory.getLogger(LogAspect.class);
+
+	@Around("@annotation(LogExecutionTime)")		
+	public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+
+		Object proceed = joinPoint.proceed();
+
+		stopWatch.stop();
+		logger.info(stopWatch.prettyPrint());
+
+		return proceed;
+	}
+
+}
+```
+
+#### 실행 결과
+
+@LogExecutionTime 이 되어 있는 메소드 api 호출 시 log.
+
+```
+---------------------------------------------
+ns         %     Task name
+---------------------------------------------
+000009000  100%  
+```
+
+IntelliJ 의 경우 해당 annotation Aspect가 어느 메소드에 적용되는 지 알 수 있다.
+![Alt text](./readmeimages/image.png) 
