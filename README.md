@@ -30,7 +30,7 @@ src
 
 ./mvnw package   패키징 필수.   그래야 jar 실행 파일 build 됨.
 
-java -jar target/*.jar  프로젝트 빌드
+`java -jar target/*.jar`  프로젝트 빌드
 
 
 #
@@ -77,7 +77,7 @@ logging.level.org.springframework.web=DEBUG
 `spring-javaformat:apply` to fix.
 
 terminal에서
-./mvnw spring-javaformat:apply
+`./mvnw spring-javaformat:apply`
 
 
 #
@@ -92,7 +92,7 @@ IntelliJ 기준 -> Alt + Insert   (생성자, Getter, Setter 등)
 #
 
 ### query
-@Query("SELECT DISTINCT owner FROM Owner owner left join  owner.pets WHERE owner.firstName LIKE :firstName %")
+`@Query("SELECT DISTINCT owner FROM Owner owner left join  owner.pets WHERE owner.firstName LIKE :firstName %")`
 
 firstName 부분 앞에 다른 값 삽입 불가.
 
@@ -107,15 +107,21 @@ LIKE %:firstName % 로 작성해야함.
 IoC: “내가 사용할 의존성을 누군가 알아서 주겠지”
 
 -> OwnerController.java
+
+```
 public OwnerController(OwnerRepository clinicService) {
 	this.owners = clinicService;
 }
+```
+
 
 해당 코드에서 OwnerRepository clinicService 는 누가 넣어주느냐.
 
 -> OwnerControllerTests.java
+```
 @MockBean                   // MockBean 스프링프레임워크 핵심기술
 private OwnerRepository owners;    // 스프링이 테스트를 만들 때, 자동으로 Bean으로 등록
+```
 
 Bean 이란? Spring이 관리하는 객체
 
