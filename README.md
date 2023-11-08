@@ -269,12 +269,12 @@ System.out.println(stopwatch.prettyPrint());
 AOP를 사용하면 해당 코드를 작성하지 않아도 API 호출 시 실행된다.
 
 ### 다양한 AOP 구현 방법
-● 컴파일 A.java ----(AOP)---> A.class (AspectJ)
-● 바이트코드 조작 A.java -> A.class ---(AOP)---> 메모리 (AspectJ)
-● 프록시 패턴 (스프링 AOP)
+- 컴파일 A.java ----(AOP)---> A.class (AspectJ)
+- 바이트코드 조작 A.java -> A.class ---(AOP)---> 메모리 (AspectJ)
+- 프록시 패턴 (스프링 AOP)
 
 ### 프록시 패턴
-● https://refactoring.guru/design-patterns/proxy
+- https://refactoring.guru/design-patterns/proxy
 
 
 ### AOP 적용 예제
