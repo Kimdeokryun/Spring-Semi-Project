@@ -6,7 +6,7 @@ Spring Project
 [issue](#issue)
 - [Java versionerror](#Java-version-error)
 - [포트 사용](#포트-사용)
-- [spring-javaformat:apply](#spring-javaformat:apply)
+- [spring-javaformat:apply](#spring-javaformat-오류)
 
 [개발 부분](#개발-부분)
 - [생성 단축키](#생성-단축키)
@@ -72,7 +72,7 @@ logging.level.org.springframework=INFO
 logging.level.org.springframework.web=DEBUG
 
 
-### spring-javaformat:apply
+### spring javaformat 오류
 
 `spring-javaformat:apply` to fix.
 
