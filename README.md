@@ -1,6 +1,25 @@
 # Spring-Semi-Project
 Spring Project
 
+[src 디렉터리](#src)
+
+[issue](#issue)
+- [Java versionerror](#Java-version-error)
+- [포트 사용](#포트-사용)
+- [spring-javaformat:apply](#Run-`spring-javaformat:apply`-to-fix.)
+
+[개발 부분](#개발-부분)
+- [생성 단축키](#생성-단축키)
+- [query](#query)
+- [IoC](#IoC-(Inversion-of-Control))
+- [스프링 IoC 컨테이너](#스프링-IoC-컨테이너)
+- [Bean을 가져오는 방법](#Bean을-가져오는-방법.)
+- [AOP](#AOP)
+- [다양한 AOP 구현 방법](#다양한-AOP-구현-방법)
+- [프록시 패턴](#프록시-패턴)
+
+#
+
 ### src
 ```
 src
@@ -43,7 +62,8 @@ java -version과 javac -version 명령어로 설치 확인
 
 
 ### 포트 사용
-8080포트를 jenkins로 사용중이여서 server.port = 8081  로 변경
+
+8080포트를 jenkins로 사용중이여서 application.properties의 파일에 server.port = 8081  로 변경
 
 
 ### 로그 정보
@@ -207,3 +227,35 @@ Setter
 		this.petRepository = petRepository;
 	}
 ```
+
+#
+
+### AOP
+Aspect Oriented Programming
+
+관점지향 프로그래밍
+
+흩어진 AAAA 와 BBBB를 별도의 클래스 메소드로 모아 놓는다.
+
+ex) 요청 처리 시 성능 측정을 위한 도구로 Spring의 StopWatch 유틸 사용
+
+API 호출 메서드 내에 해당 코드가 반복적으로 작성된 경우.
+```
+StopWatch stopwatch = new StopWatch();
+stopwatch.start();
+~
+stopwatch.stop();
+System.out.println(stopwatch.prettyPrint());
+```
+
+AOP를 사용하면 해당 코드를 작성하지 않아도 API 호출 시 실행된다.
+
+### 다양한 AOP 구현 방법
+● 컴파일 A.java ----(AOP)---> A.class (AspectJ)
+● 바이트코드 조작 A.java -> A.class ---(AOP)---> 메모리 (AspectJ)
+● 프록시 패턴 (스프링 AOP)
+
+### 프록시 패턴
+● https://refactoring.guru/design-patterns/proxy
+
+#
