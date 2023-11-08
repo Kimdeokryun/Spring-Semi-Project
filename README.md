@@ -40,7 +40,10 @@ maven 프로젝트 설정.
 ## issue
 
 ### Java version error
+
+```
 java.lang.UnsupportedClassVersionError: org/springframework/boot/loader/JarLauncher has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 55.0
+```
 
 -> 최신버전의 Java 17로 컴파일 해야함.
 
@@ -52,12 +55,13 @@ jdk-17_windows-x64_bin.exe로 java 17.0.9 설치.
 
 
 #### 환경 변수 설정
+```
 JAVA_HOME   ex) C:\Program Files\Java\jdk-17
 
 CLASSPATH   %JAVA_HOME%\lib
 
 Path        %JAVA_HOME%\bin
-
+```
 java -version과 javac -version 명령어로 설치 확인
 
 
@@ -65,8 +69,8 @@ java -version과 javac -version 명령어로 설치 확인
 
 8080포트를 jenkins로 사용중이여서 application.properties의 파일에 server.port = 8081  로 변경
 
-
 ### 로그 정보
+
 application.properties
 logging.level.org.springframework=INFO
 logging.level.org.springframework.web=DEBUG
@@ -166,7 +170,7 @@ OwnerController.class로
 
 
 ### Bean을 등록하는 방법
-
+```
 ● Component Scanning
 	@Component
 		■ @Repository
@@ -175,10 +179,13 @@ OwnerController.class로
 		■ @Configuration (test 폴더의 java sample패키지에 SampleConfig.java)
 
 ● 또는 직접 일일히 XML이나 자바 설정 파일에 등록
+```
 
 #### 사용하는 방법
+```
 ●  @Autowired 또는 @Inject
 -> Spring version 4.3 ~ 
+```
 
 클래스에 생성자가 하나뿐이고, 생성자를 주입받는 레퍼런스변수들이 Bean으로 등록되어 있다면 Bean을 자동으로 주입해주도록 되어 있다. 
 
@@ -190,14 +197,13 @@ OwnerController.class로
 
 ● 또는 ApplicationContext에서 getBean()으로 직접 꺼내거나
 
-
 ● Field에서 의존성을 주입받는 방법.
 
-오로지 “빈"들만 의존성 주입을 해줍니다
+오로지 "Bean"들만 의존성 주입을 해줍니다
 
 #### Bean 등록이 되어 있지 않았는데, 의존성 주입을 하려할 때 error문.
 
-No qualifying bean of type 'org.springframework.~'
+`No qualifying bean of type 'org.springframework.~'`
 
 #### 생성자에 Bean을 등록하는 것이 좋은 이유
 
@@ -206,7 +212,6 @@ No qualifying bean of type 'org.springframework.~'
 #### 상호 참조 의존성 문제 해결
 
 Field injection이나 Setter injection 사용
-
 
 
 #### 과제 OwnerController에 PetRepository 주입하기
@@ -267,3 +272,5 @@ AOP를 사용하면 해당 코드를 작성하지 않아도 API 호출 시 실�
 ● https://refactoring.guru/design-patterns/proxy
 
 #
+
+
