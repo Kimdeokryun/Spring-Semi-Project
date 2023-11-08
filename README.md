@@ -11,12 +11,14 @@ Spring Project
 [개발 부분](#개발-부분)
 - [생성 단축키](#생성-단축키)
 - [query](#query)
-- [IoC](#IoC-(Inversion-of-Control))
+- [IoC](#IoC)
 - [스프링 IoC 컨테이너](#스프링-IoC-컨테이너)
 - [Bean을 가져오는 방법](#Bean을-가져오는-방법)
+- [Bean을 등록하는 방법](#Bean을-등록하는-방법)
 - [AOP](#AOP)
 - [다양한 AOP 구현 방법](#다양한-AOP-구현-방법)
 - [프록시 패턴](#프록시-패턴)
+
 
 #
 
@@ -104,7 +106,9 @@ LIKE %:firstName % 로 작성해야함.
 
 #
 
-### IoC (Inversion of Control)
+### IoC
+
+IoC (Inversion of Control)
 
 일반적인 (의존성에 대한) 제어권: “내가 사용할 의존성은 내가만든다.”
 
