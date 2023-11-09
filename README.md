@@ -20,6 +20,7 @@ Spring Project
 	- [다양한 AOP 구현 방법](#다양한-aop-구현-방법)
 	- [프록시 패턴](#프록시-패턴)
 	- [AOP 적용 예제](#AOP-적용-예제)
+	- [PSA](#PSA)
 #
 
 
@@ -338,3 +339,64 @@ ns         %     Task name
 
 IntelliJ 의 경우 해당 annotation Aspect가 어느 메소드에 적용되는 지 알 수 있다.
 ![Alt text](./readmeimages/image.png) 
+
+
+## PSA 
+PSA (Portable Service Abstraction)
+
+- HTTPServlet을 직접 쓰지 않아도 Mapping 을 간단하게 할 수 있다.
+
+### Webflux
+pom.xml
+```
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+```
+해당 부분의 web을 webflux로 수정
+
+그렇게 된다면 spring web MVC를 사용할 수가 없게 된다.
+
+또한 webflux를 사용한다면 apache tomcat이 아닌 네티 기반으로 실행하게 된다.
+
+
+### 스프링 웹 MVC
+MVC (Model View Controller)
+
+@Controller | @ReuqestMapping | ...
+
+Servlet | Reactive
+
+톰캣, 제티, 네티, 언더토우
+
+### Spring Transaction
+
+ https://mkyong.com/jdbc/jdbc-transaction-example/
+
+ db commit 부분에서 
+
+```
+conn.setAutoCommit(false);
+.
+.
+.
+conn.commit();
+```
+이렇게 적용.
+
+해당 코드를 실행 중에 자동으로 commit되지 않도록 설정 및 예외 발생 시 rollback한다.
+
+`하지만 @Transactional 이 적용된 메서드는 위의 Transaction 코드를 명시하지 않아도 된다.`
+
+[PlatformTransactionManager](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/PlatformTransactionManager.html)
+
+JpaTransacionManager | DatasourceTransactionManager | HibernateTransactionManager
+
+### Spring Cache
+
+@Cacheable | @CacheEvict | ...
+
+CacheManager
+
+JCacheManager | ConcurrentMapCacheManager | EhCacheCacheManager | ..

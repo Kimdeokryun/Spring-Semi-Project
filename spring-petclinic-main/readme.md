@@ -1,174 +1,402 @@
-# Spring PetClinic Sample Application [![Build Status](https://github.com/spring-projects/spring-petclinic/actions/workflows/maven-build.yml/badge.svg)](https://github.com/spring-projects/spring-petclinic/actions/workflows/maven-build.yml)
+# Spring-Semi-Project
+Spring Project
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/spring-projects/spring-petclinic) [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=7517918)
+- 목차
+- [src](#src)
+
+- [issue](#issue)
+	- [Java version error](#java-version-error)
+	- [포트 사용](#포트-사용)
+	- [로그 정보](#로그-정보)
+	- [spring javaformat 오류](#spring-javaformat-오류)
+  
+- [개발 부분](#개발-부분)
+	- [query](#query)
+	- [IoC](#ioc)
+	- [스프링 IoC 컨테이너](#스프링-ioc-컨테이너)
+	- [Bean을 가져오는 방법](#bean을-가져오는-방법)
+	- [Bean을 등록하는 방법](#bean을-등록하는-방법)
+	- [AOP](#aop)
+	- [다양한 AOP 구현 방법](#다양한-aop-구현-방법)
+	- [프록시 패턴](#프록시-패턴)
+	- [AOP 적용 예제](#AOP-적용-예제)
+	- [PSA](#PSA)
+#
 
 
-
-
-## Understanding the Spring Petclinic application with a few diagrams
-<a href="https://speakerdeck.com/michaelisvy/spring-petclinic-sample-application">See the presentation here</a>
-
-## Running petclinic locally
-Petclinic is a [Spring Boot](https://spring.io/guides/gs/spring-boot) application built using [Maven](https://spring.io/guides/gs/maven/) or [Gradle](https://spring.io/guides/gs/gradle/). You can build a jar file and run it from the command line (it should work just as well with Java 17 or newer):
-
-
+### src
 ```
-git clone https://github.com/spring-projects/spring-petclinic.git
-cd spring-petclinic
-./mvnw package
-java -jar target/*.jar
-```
-
-You can then access petclinic at http://localhost:8080/
-
-<img width="1042" alt="petclinic-screenshot" src="https://cloud.githubusercontent.com/assets/838318/19727082/2aee6d6c-9b8e-11e6-81fe-e889a5ddfded.png">
-
-Or you can run it from Maven directly using the Spring Boot Maven plugin. If you do this, it will pick up changes that you make in the project immediately (changes to Java source files require a compile as well - most people use an IDE for this):
-
-```
-./mvnw spring-boot:run
-```
-
-> NOTE: If you prefer to use Gradle, you can build the app using `./gradlew build` and look for the jar file in `build/libs`.
-
-## Building a Container
-
-There is no `Dockerfile` in this project. You can build a container image (if you have a docker daemon) using the Spring Boot build plugin:
-
-```
-./mvnw spring-boot:build-image
+src
+┣ checkstyle
+┣ main
+┣ test
 ```
 
-## In case you find a bug/suggested improvement for Spring Petclinic
-Our issue tracker is available [here](https://github.com/spring-projects/spring-petclinic/issues)
+./mvnw package   패키징 필수.   그래야 jar 실행 파일 build 됨.
+
+`java -jar target/*.jar`  프로젝트 빌드
 
 
-## Database configuration
+#
+maven 프로젝트 설정.
 
-In its default configuration, Petclinic uses an in-memory database (H2) which
-gets populated at startup with data. The h2 console is exposed at `http://localhost:8080/h2-console`,
-and it is possible to inspect the content of the database using the `jdbc:h2:mem:testdb` url.
- 
-A similar setup is provided for MySQL and PostgreSQL if a persistent database configuration is needed. Note that whenever the database type changes, the app needs to run with a different profile: `spring.profiles.active=mysql` for MySQL or `spring.profiles.active=postgres` for PostgreSQL.
 
-You can start MySQL or PostgreSQL locally with whatever installer works for your OS or use docker:
+## issue
 
-```
-docker run -e MYSQL_USER=petclinic -e MYSQL_PASSWORD=petclinic -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=petclinic -p 3306:3306 mysql:8.0
-```
-
-or
+### Java version error
 
 ```
-docker run -e POSTGRES_USER=petclinic -e POSTGRES_PASSWORD=petclinic -e POSTGRES_DB=petclinic -p 5432:5432 postgres:15.2
+java.lang.UnsupportedClassVersionError: org/springframework/boot/loader/JarLauncher has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 55.0
 ```
 
-Further documentation is provided for [MySQL](https://github.com/spring-projects/spring-petclinic/blob/main/src/main/resources/db/mysql/petclinic_db_setup_mysql.txt)
-and for [PostgreSQL](https://github.com/spring-projects/spring-petclinic/blob/main/src/main/resources/db/postgres/petclinic_db_setup_postgres.txt).
+-> 최신버전의 Java 17로 컴파일 해야함.
 
-Instead of vanilla `docker` you can also use the provided `docker-compose.yml` file to start the database containers. Each one has a profile just like the Spring profile:
+JRE(JAVA Runtime Environment) : 자바 프로그램이 실행될 수 있는 환경 구성
+
+JDK(JAVA Development Kit) : 자바로 개발을 할 수 있는 환경구성(때문에 JRE가 포함됨)
+
+jdk-17_windows-x64_bin.exe로 java 17.0.9 설치.
+
+
+#### 환경 변수 설정
+```
+JAVA_HOME   ex) C:\Program Files\Java\jdk-17
+
+CLASSPATH   %JAVA_HOME%\lib
+
+Path        %JAVA_HOME%\bin
+```
+java -version과 javac -version 명령어로 설치 확인
+
+
+### 포트 사용
+
+8080포트를 jenkins로 사용중이여서 application.properties의 파일에 server.port = 8081  로 변경
+
+### 로그 정보
+
+application.properties
+logging.level.org.springframework=INFO
+logging.level.org.springframework.web=DEBUG
+
+
+### spring javaformat 오류
+
+`spring-javaformat:apply` to fix.
+
+terminal에서
+`./mvnw spring-javaformat:apply`
+
+
+#
+
+
+## 개발 부분
+
+
+### 생성 단축키
+IntelliJ 기준 -> Alt + Insert   (생성자, Getter, Setter 등)
+
+#
+
+### query
+`@Query("SELECT DISTINCT owner FROM Owner owner left join  owner.pets WHERE owner.firstName LIKE :firstName %")`
+
+firstName 부분 앞에 다른 값 삽입 불가.
+
+LIKE %:firstName % 로 작성해야함.
+
+#
+
+### IoC
+
+IoC (Inversion of Control)
+
+일반적인 (의존성에 대한) 제어권: “내가 사용할 의존성은 내가만든다.”
+
+IoC: “내가 사용할 의존성을 누군가 알아서 주겠지”
+
+-> OwnerController.java
 
 ```
-$ docker-compose --profile mysql up
+public OwnerController(OwnerRepository clinicService) {
+	this.owners = clinicService;
+}
 ```
 
-or
+
+해당 코드에서 OwnerRepository clinicService 는 누가 넣어주느냐.
+
+-> OwnerControllerTests.java
+```
+@MockBean                   // MockBean 스프링프레임워크 핵심기술
+private OwnerRepository owners;    // 스프링이 테스트를 만들 때, 자동으로 Bean으로 등록
+```
+
+Bean 이란? Spring이 관리하는 객체
+
+**** 해당 코드를 통해 스프링의 IoC 컨테이너가 의존성을 관리해준다.
+
+직접 만들어서 의존성 주입을 할 수 있지만, 스프링이 제공하는 의존성 주입 관련 기능 혹은
+컨테이너 lifecycle 인터페이스를 통해 다양한 기능 확장이 가능하다. 
+
+그래서 IoC 컨테이너 기능을 사용한다.
+
+#
+
+### 스프링 IoC 컨테이너
+
+빈(bean)을 만들고 엮어주며 제공해준다.
+
+#### bean을 아는 방법.
+IntelliJ Ultimate 버전 기준  codeline 부분에 콩(bean) 모양이 보인다.
+
+@Bean 혹은 extends interface 혹은 직접 해당 타입의 return 을 통해 IoC 컨테이너에 Bean 등록.
+
+의존성 주입을 스프링 IoC 컨터이너에서 해준다.
+
+의존성 주입은 Bean 끼리만 가능하다.  (IoC 컨터이너 내부에 있는 객체들 끼리)
+
+#
+
+### Bean을 가져오는 방법
+
+#### 굳이 할 필요는 없음.
+
+ApplicationContext applicationcontext;
+
+applicationcontext.getBeanDefinitionNames();  // 모든 Bean의 이름 get.
+
+applicationcontext.getBean(s:)  // 해당 Bean의 이름으로 Bean을 가져옴.
+
+or Bean type으로 가져옴.
+OwnerController.class로 
+
+# 
+
+
+### Bean을 등록하는 방법
+```
+● Component Scanning
+	@Component
+		■ @Repository
+		■ @Service
+		■ @Controller (test 폴더의 java sample패키지에 SampleControllerTest.java)
+		■ @Configuration (test 폴더의 java sample패키지에 SampleConfig.java)
+
+● 또는 직접 일일히 XML이나 자바 설정 파일에 등록
+```
+
+#### 사용하는 방법
+```
+●  @Autowired 또는 @Inject
+-> Spring version 4.3 ~ 
+```
+
+클래스에 생성자가 하나뿐이고, 생성자를 주입받는 레퍼런스변수들이 Bean으로 등록되어 있다면 Bean을 자동으로 주입해주도록 되어 있다. 
+
+따라서 Autowired가 생략가능하다. (main java owner 패키지에 OwnerController.java 생성자 부분.)
+
+-> Field에서 직접 주입 (생성자 대신.)
+
+-> Setter에서 주입 (생성자 대신.)
+
+● 또는 ApplicationContext에서 getBean()으로 직접 꺼내거나
+
+● Field에서 의존성을 주입받는 방법.
+
+오로지 "Bean"들만 의존성 주입을 해줍니다
+
+#### Bean 등록이 되어 있지 않았는데, 의존성 주입을 하려할 때 error문.
+
+`No qualifying bean of type 'org.springframework.~'`
+
+#### 생성자에 Bean을 등록하는 것이 좋은 이유
+
+필수적으로 사용해야 하는 레퍼런스 없이는 해당 인스턴스를 만들지 못하도록 강제할 수 있다.
+
+#### 상호 참조 의존성 문제 해결
+
+Field injection이나 Setter injection 사용
+
+
+#### 과제 OwnerController에 PetRepository 주입하기
+
+Field
+```
+	@Autowired
+	private PetRepository petRepository;
+```
+
+Constructor
+```
+	private final PetRepository petRepository;
+	public OwnerController(OwnerRepository clinicService, PetRepository petRepository) {
+		this.owners = clinicService;
+		this.petRepository = petRepository;
+	}
+```
+
+Setter
+```
+	private PetRepository petRepository;
+
+	@Autowired
+	public setPetRepository(PetRepository petRepository){
+		this.petRepository = petRepository;
+	}
+```
+
+#
+
+### AOP
+Aspect Oriented Programming
+
+관점지향 프로그래밍
+
+흩어진 AAAA 와 BBBB를 별도의 클래스 메소드로 모아 놓는다.
+
+ex) 요청 처리 시 성능 측정을 위한 도구로 Spring의 StopWatch 유틸 사용
+
+API 호출 메서드 내에 해당 코드가 반복적으로 작성된 경우.
+```
+StopWatch stopwatch = new StopWatch();
+stopwatch.start();
+~
+stopwatch.stop();
+System.out.println(stopwatch.prettyPrint());
+```
+
+AOP를 사용하면 해당 코드를 작성하지 않아도 API 호출 시 실행된다.
+
+### 다양한 AOP 구현 방법
+- 컴파일 A.java ----(AOP)---> A.class (AspectJ)
+- 바이트코드 조작 A.java -> A.class ---(AOP)---> 메모리 (AspectJ)
+- 프록시 패턴 (스프링 AOP)
+
+### 프록시 패턴
+- https://refactoring.guru/design-patterns/proxy
+
+
+### AOP 적용 예제
+
+@LogExecutionTime 으로 메소드 처리 시간 로깅하기
+
+인터페이스 name 파일 만드는 방법 Alt + Enter
+
+LogExecutionTime.java 파일
+```
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface LogExecutionTime {
+
+}
+```
+
+LogAspect.java 파일
+
+- @Component			// Bean 등록을 위함
+- @Aspect				// Aspect 등록
+- @Around은 ProceedingJoinPoint을 사용할 수 있음.
+- JoinPoint는 해당 @LogExecutionTime 의 메서드 target을 의미한다.
+- 해당 JoinPoint를 proceed 하고 앞 뒤로 StopWatch를 실행한다. 그리고 logger를 사용해 출력한다.
+- 그리고 proceed 결과를 return 한다.
 
 ```
-$ docker-compose --profile postgres up
+@Component			
+@Aspect				
+public class LogAspect {
+
+	Logger logger = LoggerFactory.getLogger(LogAspect.class);
+
+	@Around("@annotation(LogExecutionTime)")		
+	public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+
+		Object proceed = joinPoint.proceed();
+
+		stopWatch.stop();
+		logger.info(stopWatch.prettyPrint());
+
+		return proceed;
+	}
+
+}
 ```
 
-## Test Applications
+#### 실행 결과
 
-At development time we recommend you use the test applications set up as `main()` methods in `PetClinicIntegrationTests` (using the default H2 database and also adding Spring Boot devtools), `MySqlTestApplication` and `PostgresIntegrationTests`. These are set up so that you can run the apps in your IDE and get fast feedback, and also run the same classes as integration tests against the respective database. The MySql integration tests use Testcontainers to start the database in a Docker container, and the Postgres tests use Docker Compose to do the same thing.
+@LogExecutionTime 이 되어 있는 메소드 api 호출 시 log.
 
-## Compiling the CSS
+```
+---------------------------------------------
+ns         %     Task name
+---------------------------------------------
+000009000  100%  
+```
 
-There is a `petclinic.css` in `src/main/resources/static/resources/css`. It was generated from the `petclinic.scss` source, combined with the [Bootstrap](https://getbootstrap.com/) library. If you make changes to the `scss`, or upgrade Bootstrap, you will need to re-compile the CSS resources using the Maven profile "css", i.e. `./mvnw package -P css`. There is no build profile for Gradle to compile the CSS.
-
-## Working with Petclinic in your IDE
-
-### Prerequisites
-The following items should be installed in your system:
-* Java 17 or newer (full JDK, not a JRE).
-* [git command line tool](https://help.github.com/articles/set-up-git)
-* Your preferred IDE 
-  * Eclipse with the m2e plugin. Note: when m2e is available, there is an m2 icon in `Help -> About` dialog. If m2e is
-  not there, follow the install process [here](https://www.eclipse.org/m2e/)
-  * [Spring Tools Suite](https://spring.io/tools) (STS)
-  * [IntelliJ IDEA](https://www.jetbrains.com/idea/)
-  * [VS Code](https://code.visualstudio.com)
-
-### Steps:
-
-1) On the command line run:
-    ```
-    git clone https://github.com/spring-projects/spring-petclinic.git
-    ```
-2) Inside Eclipse or STS:
-    ```
-    File -> Import -> Maven -> Existing Maven project
-    ```
-
-    Then either build on the command line `./mvnw generate-resources` or use the Eclipse launcher (right click on project and `Run As -> Maven install`) to generate the css. Run the application main method by right-clicking on it and choosing `Run As -> Java Application`.
-
-3) Inside IntelliJ IDEA
-    In the main menu, choose `File -> Open` and select the Petclinic [pom.xml](pom.xml). Click on the `Open` button.
-
-    CSS files are generated from the Maven build. You can build them on the command line `./mvnw generate-resources` or right-click on the `spring-petclinic` project then `Maven -> Generates sources and Update Folders`.
-
-    A run configuration named `PetClinicApplication` should have been created for you if you're using a recent Ultimate version. Otherwise, run the application by right-clicking on the `PetClinicApplication` main class and choosing `Run 'PetClinicApplication'`.
-
-4) Navigate to Petclinic
-
-    Visit [http://localhost:8080](http://localhost:8080) in your browser.
+IntelliJ 의 경우 해당 annotation Aspect가 어느 메소드에 적용되는 지 알 수 있다.
+![Alt text](./readmeimages/image.png) 
 
 
-## Looking for something in particular?
+## PSA 
+PSA (Portable Service Abstraction)
 
-|Spring Boot Configuration | Class or Java property files  |
-|--------------------------|---|
-|The Main Class | [PetClinicApplication](https://github.com/spring-projects/spring-petclinic/blob/main/src/main/java/org/springframework/samples/petclinic/PetClinicApplication.java) |
-|Properties Files | [application.properties](https://github.com/spring-projects/spring-petclinic/blob/main/src/main/resources) |
-|Caching | [CacheConfiguration](https://github.com/spring-projects/spring-petclinic/blob/main/src/main/java/org/springframework/samples/petclinic/system/CacheConfiguration.java) |
+- HTTPServlet을 직접 쓰지 않아도 Mapping 을 간단하게 할 수 있다.
 
-## Interesting Spring Petclinic branches and forks
+### Webflux
+pom.xml
+```
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+```
+해당 부분의 web을 webflux로 수정
 
-The Spring Petclinic "main" branch in the [spring-projects](https://github.com/spring-projects/spring-petclinic)
-GitHub org is the "canonical" implementation based on Spring Boot and Thymeleaf. There are
-[quite a few forks](https://spring-petclinic.github.io/docs/forks.html) in the GitHub org
-[spring-petclinic](https://github.com/spring-petclinic). If you are interested in using a different technology stack to implement the Pet Clinic, please join the community there.
+그렇게 된다면 spring web MVC를 사용할 수가 없게 된다.
 
-
-## Interaction with other open source projects
-
-One of the best parts about working on the Spring Petclinic application is that we have the opportunity to work in direct contact with many Open Source projects. We found bugs/suggested improvements on various topics such as Spring, Spring Data, Bean Validation and even Eclipse! In many cases, they've been fixed/implemented in just a few days.
-Here is a list of them:
-
-| Name | Issue |
-|------|-------|
-| Spring JDBC: simplify usage of NamedParameterJdbcTemplate | [SPR-10256](https://jira.springsource.org/browse/SPR-10256) and [SPR-10257](https://jira.springsource.org/browse/SPR-10257) |
-| Bean Validation / Hibernate Validator: simplify Maven dependencies and backward compatibility |[HV-790](https://hibernate.atlassian.net/browse/HV-790) and [HV-792](https://hibernate.atlassian.net/browse/HV-792) |
-| Spring Data: provide more flexibility when working with JPQL queries | [DATAJPA-292](https://jira.springsource.org/browse/DATAJPA-292) |
+또한 webflux를 사용한다면 apache tomcat이 아닌 네티 기반으로 실행하게 된다.
 
 
-# Contributing
+### 스프링 웹 MVC
+MVC (Model View Controller)
 
-The [issue tracker](https://github.com/spring-projects/spring-petclinic/issues) is the preferred channel for bug reports, features requests and submitting pull requests.
+@Controller | @ReuqestMapping | ...
 
-For pull requests, editor preferences are available in the [editor config](.editorconfig) for easy use in common text editors. Read more and download plugins at <https://editorconfig.org>. If you have not previously done so, please fill out and submit the [Contributor License Agreement](https://cla.pivotal.io/sign/spring).
+Servlet | Reactive
 
-# License
+톰캣, 제티, 네티, 언더토우
 
-The Spring PetClinic sample application is released under version 2.0 of the [Apache License](https://www.apache.org/licenses/LICENSE-2.0).
+### Spring Transaction
 
-[spring-petclinic]: https://github.com/spring-projects/spring-petclinic
-[spring-framework-petclinic]: https://github.com/spring-petclinic/spring-framework-petclinic
-[spring-petclinic-angularjs]: https://github.com/spring-petclinic/spring-petclinic-angularjs 
-[javaconfig branch]: https://github.com/spring-petclinic/spring-framework-petclinic/tree/javaconfig
-[spring-petclinic-angular]: https://github.com/spring-petclinic/spring-petclinic-angular
-[spring-petclinic-microservices]: https://github.com/spring-petclinic/spring-petclinic-microservices
-[spring-petclinic-reactjs]: https://github.com/spring-petclinic/spring-petclinic-reactjs
-[spring-petclinic-graphql]: https://github.com/spring-petclinic/spring-petclinic-graphql
-[spring-petclinic-kotlin]: https://github.com/spring-petclinic/spring-petclinic-kotlin
-[spring-petclinic-rest]: https://github.com/spring-petclinic/spring-petclinic-rest
+ https://mkyong.com/jdbc/jdbc-transaction-example/
+
+ db commit 부분에서 
+
+```
+conn.setAutoCommit(false);
+.
+.
+.
+conn.commit();
+```
+이렇게 적용.
+
+해당 코드를 실행 중에 자동으로 commit되지 않도록 설정 및 예외 발생 시 rollback한다.
+
+`하지만 @Transactional 이 적용된 메서드는 위의 Transaction 코드를 명시하지 않아도 된다.`
+
+[PlatformTransactionManager](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/PlatformTransactionManager.html)
+
+JpaTransacionManager | DatasourceTransactionManager | HibernateTransactionManager
+
+### Spring Cache
+
+@Cacheable | @CacheEvict | ...
+
+CacheManager
+
+JCacheManager | ConcurrentMapCacheManager | EhCacheCacheManager | ..
