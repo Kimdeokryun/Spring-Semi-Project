@@ -10,6 +10,10 @@ Spring Project
 		- [프로젝트 생성](#프로젝트-생성)
 		- [Project](#project)
 		- [IntelliJ Gradle 대신에 자바 직접 실행](#intellij-gradle-대신에-자바-직접-실행)
+		- [단축키 검색](#단축키-검색)
+		- [라이브러리 살펴보기](#라이브러리-살펴보기)
+			- [스프링 부트 라이브러리](#스프링-부트-라이브러리)
+			- [테스트 라이브러리](#테스트-라이브러리)
 
 
 #
@@ -72,3 +76,27 @@ Maven, Gradle 이란?
 다음과 같이 변경하면 자바로 바로 실행해서 실행속도가 더 빠르다.
 
 ![Alt text](./images/perference.png)
+
+
+### 단축키 검색
+
+ Refactor This의 윈도우 단축키는 Ctrl + Alt + Shift + T
+
+### 라이브러리 살펴보기
+> Gradle은 의존관계가 있는 라이브러리를 함께 다운로드 한다.
+#### 스프링 부트 라이브러리
+- spring-boot-starter-web
+- spring-boot-starter-tomcat: 톰캣 (웹서버)
+- spring-webmvc: 스프링 웹 MVC
+- spring-boot-starter-thymeleaf: 타임리프 템플릿 엔진(View)
+- spring-boot-starter(공통): 스프링 부트 + 스프링 코어 + 로깅
+- spring-boot
+- spring-core
+- spring-boot-starter-logging
+- logback, slf4j  (https://velog.io/@woply/spring-SLF4J%EC%99%80-Logback%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%B4-%EB%A1%9C%EA%B7%B8-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
+#### 테스트 라이브러리
+- spring-boot-starter-test
+- junit: 테스트 프레임워크
+- mockito: 목 라이브러리
+- assertj: 테스트 코드를 좀 더 편하게 작성하게 도와주는 라이브러리
+- spring-test: 스프링 통합 테스트 지원
