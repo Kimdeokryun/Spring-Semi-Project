@@ -14,6 +14,12 @@ Spring Project
 		- [라이브러리 살펴보기](#라이브러리-살펴보기)
 			- [스프링 부트 라이브러리](#스프링-부트-라이브러리)
 			- [테스트 라이브러리](#테스트-라이브러리)
+		- [View 설정](#view-설정)
+			- [Welcome Page](#welcome-page)
+			- [thymeleaf 템플릿 엔진](#thymeleaf-템플릿-엔진)
+			- [참고](#참고)
+		- [빌드하고 실행하기](#빌드하고-실행하기)
+			- [만약 잘 안 된다면.](#만약-잘-안-된다면)
 
 
 #
@@ -100,3 +106,63 @@ Maven, Gradle 이란?
 - mockito: 목 라이브러리
 - assertj: 테스트 코드를 좀 더 편하게 작성하게 도와주는 라이브러리
 - spring-test: 스프링 통합 테스트 지원
+
+
+### View 설정
+
+#### Welcome Page
+
+스프링 부트가 제공하는 Welcome Page 기능
+
+- static/index.html 을 올려두면 Welcome page 기능을 제공한다.
+
+
+#### thymeleaf 템플릿 엔진
+
+- thymeleaf 공식 사이트: https://www.thymeleaf.org/
+
+th 는 thymeleaf를 말함.
+```
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Hello</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p th:text="'안녕하세요. ' + ${data}" >안녕하세요. 손님</p>
+</body>
+</html>
+```
+
+index.html -> hello.html 로 이동 시에 data를 넘겨주는 방식.    but hello.html은 static 폴더가 아닌 templates 폴더에 있어야 한다.
+```
+@GetMapping("hello")
+    public String hello(Model model){
+        model.addAttribute("data", "Hello!!");
+        return "hello";
+    }
+```
+
+Controller에서 return 값으로 문자("hello")를 반환하면. viewResolver가 화면을 찾아서 처리한다.
+- 스프링 부트 템플릿엔진 기본 viewName 매핑
+
+
+#### 참고
+spring-boot-devtools 라이브러리를 추가하면, html 파일을 컴파일만 해주면 서버 재시작 없이 View 파일 변경이 가능하다.
+
+> 인텔리J 컴파일 방법: 메뉴 build Recompile
+
+
+### 빌드하고 실행하기
+
+해당 프로젝트 파일로 이동.
+
+`gradlew build`
+`cd build/libs`
+`java -jar hello-spring-0.0.1-SNAPSHOT.jar`
+
+실행 확인.
+
+#### 만약 잘 안 된다면.
+`gradlew clean build`
