@@ -182,8 +182,28 @@ https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/reference/html/spring-boot
 
 정적 콘텐츠는 /static (or /public or /resources or /META-INF/resources) 라고 부르는 폴더에서 전달한다.
 
-해당 정적 콘텐츠(`hello-static.html`)에 접근하기 위해선 `/hello-static.html` 로 접속
+해당 정적 콘텐츠(`hello-static.html`)에 접근하기 위해선 `http://localhost:8080/hello-static.htm` 로 접속
 
 ### MVC와 템플릿 엔진
+
+MVC (Model View Controller)
+
+```
+    @GetMapping("hello-mvc")
+    public String helloMVC(@RequestParam("name") String name, Model model){
+        model.addAttribute("name", name);
+        return "hello-template";
+    }
+```
+`http://127.0.0.1:8081/hello-mvc?name=spring`
+
+name param에 값을 전달하면 html에 해당 name의 값이 뜬다.
+
+required는 default값이 true이다.
+
+그렇기에 param을 전달하지 않으면, `Required request parameter 'name' for method parameter type String is not present` 해당 에러가 뜬다.
+
+`return "hello-template";` hello-template.html을 /template 폴더에서 찾아서 Thymeleaf 템플릿 엔진 처리 후 변환해서 return 한다.
+
 
 ### API
