@@ -207,3 +207,45 @@ required는 default값이 true이다.
 
 
 ### API
+
+`http://127.0.0.1:8081/hello-string?name=spring`
+```
+    @GetMapping("hello-string")
+    @ResponseBody
+    public String helloString(@RequestParam("name") String name){
+        return "hello " + name;
+    }
+```
+`hello spring` 값을 return 한다.
+
+
+String 이 아닌 class 객체를 넘겨준다면?
+
+`http://127.0.0.1:8081/hello-api?name=spring`
+```
+    @GetMapping("hello-api")
+    @ResponseBody
+    public Hello helloApi(@RequestParam("name") String name){
+        Hello hello = new Hello();
+        hello.setName(name);
+        return hello;
+    }
+
+    static class Hello
+    {
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+```
+
+`{"name":"spring"}`  해당 하는 것 처럼 json 형태로 return 한다.
+
+`@ResponseBody` 로 해당 값을 return 한다.  html형태가 아닌.
+HttpMessageConverter에서 객체는 `JsonConverter` or String은 `StringConverter`로 처리해서 return 한다.
