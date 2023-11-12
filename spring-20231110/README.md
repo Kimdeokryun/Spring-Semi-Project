@@ -20,6 +20,11 @@ Spring Project
 			- [참고](#참고)
 		- [빌드하고 실행하기](#빌드하고-실행하기)
 			- [만약 잘 안 된다면.](#만약-잘-안-된다면)
+	- [스프링 웹 개발 기초](#스프링-웹-개발-기초)
+		- [정적 컨텐츠](#정적-컨텐츠)
+			- [스프링 부트 정적 컨텐츠 기능](#스프링-부트-정적-컨텐츠-기능)
+		- [MVC와 템플릿 엔진](#mvc와-템플릿-엔진)
+		- [API](#api)
 
 
 #
@@ -166,3 +171,19 @@ spring-boot-devtools 라이브러리를 추가하면, html 파일을 컴파일�
 
 #### 만약 잘 안 된다면.
 `gradlew clean build`
+
+
+## 스프링 웹 개발 기초
+
+### 정적 컨텐츠
+
+#### 스프링 부트 정적 컨텐츠 기능
+https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-mvc-static-content
+
+정적 콘텐츠는 /static (or /public or /resources or /META-INF/resources) 라고 부르는 폴더에서 전달한다.
+
+해당 정적 콘텐츠(`hello-static.html`)에 접근하기 위해선 `/hello-static.html` 로 접속
+
+### MVC와 템플릿 엔진
+
+### API
