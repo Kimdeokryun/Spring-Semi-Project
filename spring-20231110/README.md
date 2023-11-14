@@ -32,6 +32,7 @@ Spring Project
     - [회원 도메인과 리포지토리 만들기](#회원-도메인과-리포지토리-만들기)
       - [회원 객체](#회원-객체)
     - [회원 리포지토리 테스트 케이스 작성](#회원-리포지토리-테스트-케이스-작성)
+      - [테스트 주도 개발](#테스트-주도-개발)
 
 
 #
@@ -305,4 +306,50 @@ store.values().stream()
 실행해서 이러한 문제를 해결한다.
 
 
+```        
+System.out.println("resullt = " + (result == member));
+Assertions.assertEquals(result, member);
+```
 
+Assertions.assertEquals를 통해서 같다면 아무런 출력을 하지 않고 다르다면 아래의 문구를 볼 수 있다.
+```
+org.opentest4j.AssertionFailedError: 
+Expected :com.hello.hellospring.domain.Member@214b199c
+Actual   :null
+<Click to see difference>
+중략....
+```
+
+최근에는 `Assertions.assertThat(member).isEqualTo(result);` 를 더 많이 사용함
+
+`Assertions.assertEquals`는 `import org.junit.jupiter.api.Assertions;` 를,
+`Assertions.assertThat`는 `import org.assertj.core.api.Assertions;`를 import 한다.
+
+static import `import static org.assertj.core.api.Assertions.*;`를 통해서
+
+해당 메소드를 `assertThat(member).isEqualTo(result);` 이렇게 줄여서 사용 할 수 있다.
+
+
+
+Test case class 에서 각 test function 별 의존관계를 없애기 위해선
+test 를 위해 저장한 데이터를 clear해야함.
+
+각 test 함수 실행 마다 실행하는 annotation @AfterEach
+```
+    @AfterEach
+    public void afterEach(){
+        repository.clearStore();
+    }
+```
+repository class에서는 해당 func를 작성.
+```
+    public void clearStore(){
+        store.clear();
+    }
+```
+
+#### 테스트 주도 개발
+테스트를 먼저 만들고 구현 클래스를 만들어서 돌려보는 것을 TDD(테스트 주도 개발)라고 한다.
+
+-> 소스코드가 굉장히 길어지고 많아진다면 테스트 코드 없이 개발하기가 거의 불가능하다.
+-> 그러므로 테스트 관련해서는 깊이 있게 공부해야한다.
