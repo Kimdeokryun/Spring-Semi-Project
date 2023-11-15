@@ -34,6 +34,7 @@ Spring Project
     - [회원 리포지토리 테스트 케이스 작성](#회원-리포지토리-테스트-케이스-작성)
       - [테스트 주도 개발](#테스트-주도-개발)
     - [회원 서비스 개발](#회원-서비스-개발)
+    - [회원 서비스 테스트](#회원-서비스-테스트)
 
 
 #
@@ -361,3 +362,19 @@ repository class에서는 해당 func를 작성.
 ctrl + alt + v (command + option + v) -> 해당 return 값으로 생성.
 
 `extract method` 를 통해 메서드 분리.
+
+### 회원 서비스 테스트
+
+ctrl + shift + t (command + shift + t) -> 개발된 서비스 부분에서 test class 생성
+
+test 함수 이름은 한글로도 작성하기도 한다.
+
+
+- 테스트 케이스 작성법
+
+  // given -> 이 데이터를 기반
+
+  // when  -> 이것을 검증
+
+  // then  -> 검증부
+
