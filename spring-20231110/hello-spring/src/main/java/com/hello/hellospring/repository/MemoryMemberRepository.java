@@ -1,13 +1,10 @@
 package com.hello.hellospring.repository;
 
 import com.hello.hellospring.domain.Member;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
 
-@Repository
-public class MemoryMeberRepository implements MemberRepository{
+public class MemoryMemberRepository implements MemberRepository{
 
     private static Map<Long, Member> store = new HashMap<>();
     private static long sequence = 0L;

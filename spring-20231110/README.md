@@ -425,7 +425,7 @@ memberService가 스프링 빈으로 등록되어 있지 않다.
  참고: 생성자에 @Autowired 를 사용하면 객체 생성 시점에 스프링 컨테이너에서 해당 스프링 빈을 찾아서
 주입한다. 생성자가 1개만 있으면 @Autowired 는 생략할 수 있다.
 
--> dependency injection
+-> Dependency Injection
 
 #### 회원 리포지토리 스프링 빈 등록
 
@@ -439,6 +439,41 @@ memberService가 스프링 빈으로 등록되어 있지 않다.
   
 
 ### 자바 코드로 직접 스프링 빈 등록하기
+
+- 회원 서비스와 회원 리포지토리의 @Service, @Repository, @Autowired 애노테이션을 제거하고
+진행한다.
+
+memberservice 와 memberRepository도 Spring Bean에 올려준다.
+
+
+```
+@Configuration
+public class SpringConfig {
+
+    @Bean
+    public  MemberService memberService() {
+        return new MemberService(memberRepository());
+    }
+
+    @Bean
+    public MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+}
+```
+
+- XML로 설정하는 방식도 있지만 최근에는 잘 사용하지 않으므로 생략
+- Dependency Injection에는 필드 주입, setter 주입, 생성자 주입 이렇게 3가지 방법이 있다. 의존관계가 실행중에
+동적으로 변하는 경우는 거의 없으므로 생성자 주입을 권장
+- 실무에서는 주로 정형화된 컨트롤러, 서비스, 리포지토리 같은 코드는 `컴포넌트 스캔`을 사용한다. 
+그리고 정형화 되지 않거나, 상황에 따라 구현 클래스를 변경해야 하면 설정을 통해 `스프링 빈`으로
+등록한다
+
+주의: @Autowired 를 통한 DI는 helloController , memberService 등과 같이 스프링이 관리하는
+객체에서만 동작한다. 스프링 빈으로 등록하지 않고 내가 직접 생성한 객체에서는 동작하지 않는다.
+
+스프링 컨테이너, DI 관련된 자세한 내용은 스프링 핵심 원리 강의에서 설명한다.
+
 
 
 
