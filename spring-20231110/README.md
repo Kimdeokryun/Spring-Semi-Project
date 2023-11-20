@@ -49,6 +49,9 @@ Spring Project
     - [회원 웹 기능 - 조회](#회원-웹-기능---조회)
   - [스프링 DB 접근 기술](#스프링-db-접근-기술)
     - [H2 데이터베이스 설치](#h2-데이터베이스-설치)
+    - [순수 JDBC](#순수-jdbc)
+      - [환경 설정](#환경-설정)
+      - [Jdbc 리포지토리 구현](#jdbc-리포지토리-구현)
 
 
 #
@@ -515,3 +518,63 @@ name="name" 에서 "name" 은 spring 에서의 key다.
 
 ### H2 데이터베이스 설치
 
+### 순수 JDBC
+
+#### 환경 설정
+
+`build.gradle 파일에 jdbc, h2 데이터베이스 관련 라이브러리 추가`
+
+```
+implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+runtimeOnly 'com.h2database:h2'
+```
+
+`스프링 부트 데이터베이스 연결 설정 추가 (resources/application.properties)`
+
+```
+spring.datasource.url=jdbc:h2:tcp://localhost/~/test
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+```
+
+
+#### Jdbc 리포지토리 구현
+주의! 이렇게 JDBC API로 직접 코딩하는 것은 20년 전 이야기이다. 따라서 고대 개발자들이 이렇게
+고생하고 살았구나 생각하고, 정신건강을 위해 참고만 하고 넘어가자.
+
+
+기존 구현
+```
+        
+        String sql = "insert into member(name) values(?)";
+
+        Connection conn = dataSource.getConnection();
+
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, member.getName());
+
+        pstmt.executeUpdate();
+```
+
+
+`pstmt.setString(1, member.getName());` 에서 1은 `String sql = "insert into member(name) values(?)";` 해당 query 문에서의 ? index 이다.
+
+`pstmt.executeUpdate();` 을 실행하면 실제 DB에 값이 저장된다.
+
+`pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);` 을 설정하면 `rs = pstmt.getGeneratedKeys();`을 통해서 id(key)값을 return 받는다.
+
+`close(conn, pstmt, rs);`  실 행 이후 리소스 반환.
+
+
+`SpringConfig` 스프링 설정 변경
+
+DataSource는 데이터베이스 커넥션을 획득할 때 사용하는 객체다. 스프링 부트는 데이터베이스 커넥션
+정보를 바탕으로 DataSource를 생성하고 스프링 빈으로 만들어둔다. 그래서 DI를 받을 수 있다.
+
+
+- 개방-폐쇄 원칙(OCP, Open-Closed Principle)
+  - 확장에는 열려있고, 수정, 변경에는 닫혀있다.
+- 스프링의 DI (Dependencies Injection)을 사용하면 기존 코드를 전혀 손대지 않고, 설정만으로 구현
+- 클래스를 변경할 수 있다.
+- 회원을 등록하고 DB에 결과가 잘 입력되는지 확인하자.
+- 데이터를 DB에 저장하므로 스프링 서버를 다시 실행해도 데이터가 안전하게 저장된다.
