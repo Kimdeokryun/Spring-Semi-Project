@@ -53,6 +53,7 @@ Spring Project
       - [환경 설정](#환경-설정)
       - [Jdbc 리포지토리 구현](#jdbc-리포지토리-구현)
     - [스프링 통합 테스트](#스프링-통합-테스트)
+    - [스프링 JdbcTemplate](#스프링-jdbctemplate)
 
 
 #
@@ -590,3 +591,8 @@ DataSource는 데이터베이스 커넥션을 획득할 때 사용하는 객체�
 
 - @Commit 하면 rollback 하지 않음.
 
+
+### 스프링 JdbcTemplate
+
+- 순수 Jdbc와 동일한 환경설정을 하면 된다. 
+- 스프링 JdbcTemplate과 MyBatis 같은 라이브러리는 JDBC API에서 본 반복 코드를 대부분 제거해준다. 하지만 SQL은 직접 작성해야 한다.
